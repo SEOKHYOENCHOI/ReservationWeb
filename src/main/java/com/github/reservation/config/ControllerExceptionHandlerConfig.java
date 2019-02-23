@@ -21,7 +21,7 @@ import com.github.reservation.exception.InvalidParameterException;
  * @method : ModelAndView handleInvalidParameterException(InvalidParameterException invalidParameterException)
  * @method : ModelAndView handleEmptyResultException(EmptyResultException emptyResultException) 
  */
-@ControllerAdvice({"com.nts.controller"})
+@ControllerAdvice({"com.github.reservation.controller"})
 public class ControllerExceptionHandlerConfig {
 
 	

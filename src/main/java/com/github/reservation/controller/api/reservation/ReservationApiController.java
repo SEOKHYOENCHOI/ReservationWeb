@@ -5,6 +5,8 @@
 
 package com.github.reservation.controller.api.reservation;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.github.reservation.dto.displayinfodto.DisplayInfo;
 import com.github.reservation.dto.productdto.ProductPrice;
@@ -102,6 +105,35 @@ public class ReservationApiController {
 		session.setMaxInactiveInterval(30 * 60);
 		return reservationEmail;
 		
+	}
+	
+	@PostMapping("/{reservationInfoId}/comments")
+	public int registerComment(@PathVariable(name = "reservationInfoId") int reservationInfoId,
+			@RequestParam(name = "productId") int productId,
+			@RequestParam(name = "comment") String comment,
+			@RequestParam("reservationImage") MultipartFile reservationImage) {
+		
+		System.out.println("파일 이름 : " + reservationImage.getOriginalFilename());
+		System.out.println("파일 크기 : " + reservationImage.getSize());
+		
+        try(
+                // 맥일 경우 
+                //FileOutputStream fos = new FileOutputStream("/tmp/" + file.getOriginalFilename());
+                // 윈도우일 경우
+                FileOutputStream fos = new FileOutputStream("c:/tmp/" + reservationImage.getOriginalFilename());
+                InputStream is = reservationImage.getInputStream();
+        ){
+        	    int readCount = 0;
+        	    byte[] buffer = new byte[1024];
+            while((readCount = is.read(buffer)) != -1){
+                fos.write(buffer,0,readCount);
+            }
+        }catch(Exception ex){
+            throw new RuntimeException("file Save Error");
+        }
+        
+        System.out.println(reservationImage);
+        return 1;
 	}
 	
 	/**

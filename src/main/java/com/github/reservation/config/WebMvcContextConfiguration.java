@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.github.reservation.interceptor.LogInterceptor;
 import com.github.reservation.interceptor.SessionInterceptor;
 
 /**
@@ -34,7 +36,7 @@ import com.github.reservation.interceptor.SessionInterceptor;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.nts.controller", "com.nts.intercepter" })
+@ComponentScan(basePackages = { "com.github.reservation.controller", "com.github.reservation.intercepter" })
 @Import(ControllerExceptionHandlerConfig.class)
 public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 	
@@ -60,6 +62,7 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
         registry.addViewController("/reservation").setViewName("reserve");
         registry.addViewController("/bookinglogin").setViewName("bookinglogin");
         registry.addViewController("/myreservation").setViewName("myreservation");
+        registry.addViewController("/reviewWrite").setViewName("reviewWrite");
         registry.addViewController("/error/invalid-parameter-error"); 
         registry.addViewController("/error/empty-resultset-error");   
 	}
@@ -77,5 +80,14 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
     		registry.addInterceptor(new SessionInterceptor())
     								.addPathPatterns("/api/reservations")
     								.excludePathPatterns("/api/reservations/reservation");
+    		
+    		registry.addInterceptor(new LogInterceptor());
 	}
+	
+	@Bean
+    public MultipartResolver multipartResolver() {
+        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(1024 * 1024 * 10); // 1024 * 1024 * 10 * Byte = 10MBs
+        return multipartResolver;
+    }
 }

@@ -21,7 +21,8 @@ public class DisplayInfoResponse {
 	private List<ProductImage> productImages;
 	private List<ProductPrice> productPrices;
 
-	public DisplayInfoResponse() {}
+	public DisplayInfoResponse() {
+	}
 
 	public double getAverageScore() {
 		return averageScore;

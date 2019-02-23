@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
  * 
  */
 @Configuration
-@ComponentScan(basePackages = { "com.nts.dao", "com.nts.service" })
+@ComponentScan(basePackages = { "com.github.reservation.dao", "com.github.reservation.service" })
 @Import({ DBConfig.class })
 public class ApplicationConfig {
 	

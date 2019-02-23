@@ -25,9 +25,11 @@
 						<span class="spr_bi ico_bk_logo">예약</span> 
 					</a>
 				</h1>
-				<a href="#" class="btn_my"> 
-					<span title="내예약" class="viewReservation"></span> 
-				</a>
+				<a href="javascript:void(0)" class="btn_my">
+                	<span class="viewReservation" title="예약확인">
+                		${sessionScope.reservationEmail}
+                	</span>
+               	</a>
 			</header>
 		</div>
 		<hr>
@@ -131,7 +133,7 @@
 	</script>
  	<script type="rv-template" id="comment_button">
 		<div class="booking_cancel">
-			<button class="btn" name="_{name}">
+			<button class="btn" name="_{name}" id="_{productId}">
 				<span>예매자 리뷰 남기기</span>
 			</button>
 		</div>

@@ -4,10 +4,9 @@
  */
 package com.github.reservation.dao.categorydao;
 
-import static com.github.reservation.dao.categorydao.CategoryDaoSqls.*;
+import static com.github.reservation.dao.categorydao.CategoryDaoSqls.SELECT_CATEGORIES_GROUP_BY_ID;
 
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
