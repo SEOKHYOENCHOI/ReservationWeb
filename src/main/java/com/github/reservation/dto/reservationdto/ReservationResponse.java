@@ -11,9 +11,18 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class ReservationResponse {
 	private Reservation reservation;
-	private List<ReservationPrice> prices;
 
 	public ReservationResponse() {}
+
+	private List<ReservationPrice> prices;
+
+	public Reservation getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
 
 	public List<ReservationPrice> getPrices() {
 		return prices;
@@ -25,8 +34,6 @@ public class ReservationResponse {
 
 	@Override
 	public String toString() {
-		ToStringStyle style = ToStringStyle.MULTI_LINE_STYLE;
-		ReflectionToStringBuilder tsb = new ReflectionToStringBuilder(this, style);
-		return tsb.toString();
+		return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 }

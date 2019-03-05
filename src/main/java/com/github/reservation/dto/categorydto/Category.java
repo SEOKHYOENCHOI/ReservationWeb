@@ -37,8 +37,6 @@ public class Category {
 
 	@Override
 	public String toString() {
-		ToStringStyle style = ToStringStyle.MULTI_LINE_STYLE;
-		ReflectionToStringBuilder tsb = new ReflectionToStringBuilder(this, style);
-		return tsb.toString();
+		return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 }

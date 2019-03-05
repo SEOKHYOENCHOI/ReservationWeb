@@ -16,6 +16,14 @@ public class ReservationPrice {
 	private double discountRate;
 	private String priceTypeName;
 
+	public int getReservationInfoId() {
+		return reservationInfoId;
+	}
+
+	public void setReservationInfoId(int reservationInfoId) {
+		this.reservationInfoId = reservationInfoId;
+	}
+
 	public double getDiscountRate() {
 		return discountRate;
 	}
@@ -74,8 +82,6 @@ public class ReservationPrice {
 
 	@Override
 	public String toString() {
-		ToStringStyle style = ToStringStyle.MULTI_LINE_STYLE;
-		ReflectionToStringBuilder tsb = new ReflectionToStringBuilder(this, style);
-		return tsb.toString();
+		return ReflectionToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 }
