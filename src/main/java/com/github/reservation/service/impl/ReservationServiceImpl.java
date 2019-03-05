@@ -4,6 +4,7 @@
  */
 package com.github.reservation.service.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,23 +27,28 @@ import com.github.reservation.util.Validator;
 public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
-	ReservationDao reservationDao;
+	private ReservationDao reservationDao;
+	
 	@Autowired
-	DisplayInfoDao displayInfoDao;
+	private DisplayInfoDao displayInfoDao;
 
 	@Override
 	public List<ReservationInfo> getReservationInfosByReservationEmail(String reservationEmail) {
-		Validator.emailValidation(reservationEmail);
-		
+		if (!Validator.emailValidation(reservationEmail)) {
+			throw new InvalidParameterException("email", new ExceptionValue<String>(reservationEmail));
+		}
+
 		List<Reservation> reservations = getReservationsByReservationEmail(reservationEmail);
 		List<ReservationInfo> reservationInfos = new ArrayList<>();
-		
-		for(Reservation reservation : reservations) {
+
+		for (Reservation reservation : reservations) {
 			ReservationInfo reservationInfo = new ReservationInfo();
-			
+
 			reservationInfo.setReservation(reservation);
-			reservationInfo.setReservationPrices(getReservationPricesByReservationInfoId(reservation.getDisplayInfoId()));
-			reservationInfo.setDisplayInfo(displayInfoDao.selectDisplayInfoByDisplayInfoId(reservation.getDisplayInfoId()));
+			reservationInfo
+					.setReservationPrices(getReservationPricesByReservationInfoId(reservation.getDisplayInfoId()));
+			reservationInfo
+					.setDisplayInfo(displayInfoDao.selectDisplayInfoByDisplayInfoId(reservation.getDisplayInfoId()));
 			reservationInfos.add(reservationInfo);
 		}
 		return reservationInfos;
@@ -50,7 +56,10 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public List<Reservation> getReservationsByReservationEmail(String reservationEmail) {
-		Validator.emailValidation(reservationEmail);
+		if (!Validator.emailValidation(reservationEmail)) {
+			throw new InvalidParameterException("email", new ExceptionValue<String>(reservationEmail));
+		}
+
 		return reservationDao.selectReservationsByReservationEmail(reservationEmail);
 	}
 
@@ -59,38 +68,41 @@ public class ReservationServiceImpl implements ReservationService {
 		if (reservationInfoId <= 0) {
 			throw new InvalidParameterException("reservationInfoId", new ExceptionValue<Integer>(reservationInfoId));
 		}
-		
+
 		return reservationDao.selectReservationPricesByReservationInfoId(reservationInfoId);
 	}
 
 	@Override
-	public int modifyCancelFlag(int reservationInfoId, int cancelFlag) {
+	public int modifyCancelFlag(int reservationInfoId, boolean cancelFlag) {
 		if (reservationInfoId <= 0) {
 			throw new InvalidParameterException("reservationInfoId", new ExceptionValue<Integer>(reservationInfoId));
 		}
-		
+
 		return reservationDao.updateCancelFlag(reservationInfoId, cancelFlag);
 	}
 
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, rollbackFor = SQLException.class)
 	public int addReservation(ReservationParam reservationParam) {
-		Validator.emailValidation(reservationParam.getReservation().getReservationEmail());
-		Validator.nameValidation(reservationParam.getReservation().getReservationName());
-		Validator.telValidation(reservationParam.getReservation().getReservationTel());
 		
+		if(!Validator.reservationValidation(reservationParam.getReservation())) {
+			throw new InvalidParameterException("email",
+					new ExceptionValue<String>(reservationParam.getReservation().toString()));
+		}
+
 		int key = reservationDao.insertReservation(reservationParam.getReservation());
 		return addReservationPrices(key, reservationParam.getPrices());
 	}
 
 	@Override
+	@Transactional(readOnly = false, rollbackFor = SQLException.class)
 	public int addReservationPrices(int key, List<ReservationPrice> prices) {
 		if (key <= 0) {
 			throw new InvalidParameterException("reservationInfoId", new ExceptionValue<Integer>(key));
 		}
-		
+
 		int insertResult = 0;
-		for(ReservationPrice price : prices) {
+		for (ReservationPrice price : prices) {
 			insertResult += reservationDao.insertReservationPrice(key, price);
 		}
 		return insertResult;

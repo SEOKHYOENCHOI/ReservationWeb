@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -90,14 +91,15 @@
 				<!-- 리뷰 작성 푸터 -->
 				<div class="review_write_footer_wrap">
 					<div class="review_write_footer">
-						<form id="attach_image_form" method="post" enctype="multipart/form-data">
-							<label class="btn_upload" for="reviewImageFileOpenInput">
-								<i class="fn fn-image1" aria-hidden="true"></i>
-								<span class="text_add_photo">사진 추가</span>
-								<p style="color:#999; font-size:13px">JPG, PNG 파일만 첨부가능합니다.</p>
-							</label>
+							<form id="attach_image_form" method="post" enctype="multipart/form-data">
+								<label class="btn_upload" for="reviewImageFileOpenInput">
+									<i class="fn fn-image1" aria-hidden="true"></i>
+									<span class="text_add_photo">사진 추가</span>
+									<p style="color:#999; font-size:13px">JPG, PNG 파일만 첨부가능합니다.</p>
+								</label>
+							</form>
+							<input type='hidden' name='redirect_to' value='/' />
 							<input type="file" name="reservationImage" class="hidden_input" id="reviewImageFileOpenInput">
-						</form>
 						<div class="guide_review">
 							<span id="comment_length">0</span>/400
 							<span>(최소 5자이상)</span>
@@ -146,6 +148,9 @@
 			<span class="copyright">© NAVER Corp.</span>
 		</div>
 	</footer>
+	<script type = "text/javascript" src="/js/common/ajax.js" charset="utf-8"></script>
+	<script type = "text/javascript" src="/js/common/utils.js" charset="utf-8"></script>
+	<script type = "text/javascript" src="/js/mapper/review_write-mapper.js" charset="utf-8"></script>
 	<script type = "text/javascript" src="/js/review_write/review_write.js" charset="utf-8"></script>
 </body>
 </html>

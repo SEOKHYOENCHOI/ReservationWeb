@@ -1,4 +1,3 @@
-var categories;
 
 /**
  * @description : EventList 내용 제거 
@@ -18,7 +17,7 @@ function categoryListRequest(){
 	var request = {
 			method:"GET",
 			contentType:"application/x-www-form-urlencoded",
-			queryString:""
+			data:""
 	}
 	var uri = "/api/categories";
 	sendRequest(request, uri, appendTabList);
@@ -57,13 +56,13 @@ function appendTabList(categories){
 	categories.push(allCategories);
 	categories = categories.concat(items);
 	
-	addCategoryButtonListener();
+	addCategoryButtonListener(categories);
 }
 
 /**
  * @description : category에 Event Listener 추가
  */
-function addCategoryButtonListener(){
+function addCategoryButtonListener(categories){
 	var tabList = document.querySelector("#category_list").getElementsByClassName("item");
 	for(var i=0, len=tabList.length; i<len; i++){
 		

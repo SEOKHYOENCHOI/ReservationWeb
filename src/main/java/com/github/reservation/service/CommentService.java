@@ -5,7 +5,11 @@
 
 package com.github.reservation.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.github.reservation.dto.commentdto.Comment;
 import com.github.reservation.dto.commentdto.CommentImage;
@@ -28,4 +32,8 @@ public interface CommentService {
 	List<Comment> getCommentsByDisplayInfoId(int displayInfoId);
 	
 	CommentImage getCommentImageByReservationUserCommentId(int reservationUserCommentId);
+	
+	void addComment(Comment comment, MultipartFile reservationImage, String imagePath) throws FileNotFoundException, IOException;
+	
+	void addCommentImage(CommentImage commentImage, MultipartFile reservationImage);
 }

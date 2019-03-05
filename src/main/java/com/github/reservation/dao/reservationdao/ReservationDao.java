@@ -46,7 +46,7 @@ public class ReservationDao {
 		return jdbc.queryForObject(SELECT_TOTAL_PRICE_BY_RESERVATION_INFO_ID, param, Integer.class);
 	}
 	
-	public int updateCancelFlag(int reservationInfoId, int cancelFlag) {
+	public int updateCancelFlag(int reservationInfoId, boolean cancelFlag) {
 		SqlParameterSource source = new MapSqlParameterSource()
 										.addValue("reservationInfoId", reservationInfoId)
 										.addValue("cancelFlag", cancelFlag);
@@ -57,8 +57,6 @@ public class ReservationDao {
 		KeyHolder generatedKey= new GeneratedKeyHolder();
 		SqlParameterSource source = new MapSqlParameterSource()
 										.addValue("displayInfoId", reservation.getDisplayInfoId())
-										.addValue("createDate", reservation.getCreateDate())
-										.addValue("modifyDate", reservation.getModifyDate())
 										.addValue("productId", reservation.getProductId())
 										.addValue("cancelFlag", reservation.getCancelFlag())
 										.addValue("reservationDate", reservation.getReservationDate())
@@ -76,5 +74,6 @@ public class ReservationDao {
 				.addValue("count", price.getCount());
 		return jdbc.update(INSERT_RESERVATION_PRICE, source);
 	}
+
 
 }

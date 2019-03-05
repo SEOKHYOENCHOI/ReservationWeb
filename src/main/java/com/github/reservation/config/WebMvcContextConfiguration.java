@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -41,11 +42,12 @@ import com.github.reservation.interceptor.SessionInterceptor;
 public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 	
 	private static final int YEAR_SECONDS = 31556926;
+	private static final int MAX_UPLOAD_SIZE_10M = 10485760;
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(YEAR_SECONDS);
 		registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(YEAR_SECONDS);
-		registry.addResourceHandler("/img_map/**").addResourceLocations("/img_map/").setCachePeriod(YEAR_SECONDS);
 		registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(YEAR_SECONDS);
 	}
 
@@ -86,8 +88,8 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 	
 	@Bean
     public MultipartResolver multipartResolver() {
-        org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(1024 * 1024 * 10); // 1024 * 1024 * 10 * Byte = 10MBs
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(MAX_UPLOAD_SIZE_10M); // in bytes
         return multipartResolver;
     }
 }

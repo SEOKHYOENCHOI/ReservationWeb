@@ -8,7 +8,7 @@ function reservationDisplayInfoRequest(callBack, displayInfoId){
 	var request = {
 			method:"GET",
 			contentType:"application/x-www-form-urlencoded",
-			queryString:""
+			data:""
 	}
 	var requestUri = "/api/reservations/" + displayInfoId;
 	sendRequest(request, requestUri, callBack);
@@ -23,7 +23,7 @@ function reservationSubmitRequest(callBack, reservationParam){
 	var request = {
 			method:"POST",
 			contentType:"application/json",
-			queryString: JSON.stringify(reservationParam)
+			data: JSON.stringify(reservationParam)
 	}
 	var requestUri = "/api/reservations/reservation";
 	sendRequest(request, requestUri, callBack);

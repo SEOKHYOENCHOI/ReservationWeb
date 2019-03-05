@@ -11,7 +11,7 @@ function productListRequest(categoryId, start){
 	var request = {
 			method:"GET",
 			contentType:"application/x-www-form-urlencoded",
-			queryString:""
+			data:""
 	}
 	var uri = "/api/products" + "?categoryId=" + categoryId + "&start=" + start;
 	sendRequest(request, uri, appendProductList);

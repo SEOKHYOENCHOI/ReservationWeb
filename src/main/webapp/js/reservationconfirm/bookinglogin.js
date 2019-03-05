@@ -3,7 +3,7 @@ function loginRequest(callBack, emailParam){
 	var request = {
 			method:"GET",
 			contentType:"application/x-www-form-urlencoded",
-			queryString:""
+			data:""
 	}
 	var requestUri = "/api/reservations/login?" + emailParam;
 	sendRequest(request, requestUri, callBack);

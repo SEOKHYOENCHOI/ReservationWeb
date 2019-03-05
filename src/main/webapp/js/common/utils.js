@@ -46,3 +46,11 @@ function setWarning(name, target){
 		target.value = "";
 	}, warningDisplayTimeMillis);
 }
+
+
+function validateImageType(image) {
+	const result = ([ 'image/jpeg',
+					  'image/png',
+					  'image/jpg' ].indexOf(image.type) > -1);
+	return result;
+}

@@ -7,7 +7,7 @@ function myreservationRequest(callBack, emailParam){
 	var request = {
 			method:"GET",
 			contentType:"application/x-www-form-urlencoded",
-			queryString:""
+			data:""
 	}
 	var requestUri = "/api/reservations?" + emailParam;
 	sendRequest(request, requestUri, callBack);
@@ -17,7 +17,7 @@ function reservationCancelRequest(reservationInfoId){
 	var request = {
 			method:"PUT",
 			contentType:"application/x-www-form-urlencoded",
-			queryString:""
+			data:""
 	}
 	var requestUri = "/api/reservations/" + reservationInfoId;
 	sendRequest(request, requestUri);

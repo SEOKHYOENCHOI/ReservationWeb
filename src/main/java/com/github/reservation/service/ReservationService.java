@@ -15,14 +15,14 @@ import com.github.reservation.dto.reservationinfodto.ReservationInfo;
 public interface ReservationService {
 
 	List<ReservationInfo> getReservationInfosByReservationEmail(String reservationEmail);
-	
+
 	List<Reservation> getReservationsByReservationEmail(String reservationEmail);
 
 	List<ReservationPrice> getReservationPricesByReservationInfoId(int reservationInfoId);
 
-	int modifyCancelFlag(int reservationInfoId, int cancelFlag);
-	
+	int modifyCancelFlag(int reservationInfoId, boolean cancelFlag);
+
 	int addReservation(ReservationParam reservationParam);
-	
+
 	int addReservationPrices(int key, List<ReservationPrice> prices);
 }

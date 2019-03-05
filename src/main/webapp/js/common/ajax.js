@@ -5,8 +5,9 @@
 function sendRequest(request, uri, callBack){
 	var xhr = new XMLHttpRequest();
 	xhr.open(request.method, uri, true);
-	xhr.setRequestHeader("Content-Type", request.contentType);
-
+	if(request.contentType){
+		xhr.setRequestHeader("Content-Type", request.contentType);
+	}
 	xhr.onreadystatechange = () => {
 		if(xhr.readyState === 4 && xhr.status === 200){
 			if(xhr.response.includes("html")){
@@ -22,5 +23,5 @@ function sendRequest(request, uri, callBack){
 		}
 	}
 	
-	xhr.send(request.queryString);
+	xhr.send(request.data);
 }

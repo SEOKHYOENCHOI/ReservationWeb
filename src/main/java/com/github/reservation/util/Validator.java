@@ -6,31 +6,30 @@ package com.github.reservation.util;
 
 import java.util.regex.Pattern;
 
-import com.github.reservation.exception.ExceptionValue;
-import com.github.reservation.exception.InvalidParameterException;
+import com.github.reservation.dto.reservationdto.Reservation;
 
 public class Validator {
 
 	private static final String EMAIL_REGEX = "^[\\w+_]\\w+@\\w+\\.\\w+(\\.\\w+)?$";
 	private static final String NAME_REGEX = "[가-힣]{2,4}";
 	private static final String TEL_REGEX = "01(([16789]-(\\d{3,4}))|0-\\d{4})-\\d{4}$";
-	
-	
-	public static void emailValidation(String email) {
-		if(!Pattern.matches(EMAIL_REGEX, email)) {
-			throw new InvalidParameterException("email", new ExceptionValue<String>(email));
-		};
+
+	public static boolean emailValidation(String email) {
+		return Pattern.matches(EMAIL_REGEX, email);
 	}
-	public static void nameValidation(String name) {
-		if(!Pattern.matches(NAME_REGEX, name)) {
-			throw new InvalidParameterException("name", new ExceptionValue<String>(name));
-		};
+
+	public static boolean nameValidation(String name) {
+		return Pattern.matches(NAME_REGEX, name);
 	}
-	public static void telValidation(String tel) {
-		if(!Pattern.matches(TEL_REGEX, tel)) {
-			throw new InvalidParameterException("tel", new ExceptionValue<String>(tel));
-		};
+
+	public static boolean telValidation(String tel) {
+		return Pattern.matches(TEL_REGEX, tel);
+	}
+
+	public static boolean reservationValidation(Reservation reservation) {
+		return Pattern.matches(EMAIL_REGEX, reservation.getReservationEmail())
+				&&Pattern.matches(NAME_REGEX, reservation.getReservationName())
+				&&Pattern.matches(TEL_REGEX, reservation.getReservationTel());
 	}
 }
-
 
