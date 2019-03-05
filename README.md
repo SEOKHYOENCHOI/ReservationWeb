@@ -15,5 +15,11 @@
 * ECMA Script 2015
 
 
+• ToUse
+======================
+* application.properties File에 DB주소 및 User, Schema와 Image URL삽입 후 실행합니다.
+
+
+
 
 
